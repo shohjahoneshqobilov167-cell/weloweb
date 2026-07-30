@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURUM CYCLES — Premium velosipedlar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,ital@9..144,300..700,0..1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B0B0D;
+    --panel:#141416;
+    --panel-2:#1B1B1E;
+    --ivory:#EDEAE2;
+    --ivory-dim:#A9A59C;
+    --brass:#B08D46;
+    --brass-bright:#D4AF63;
+    --burgundy:#5C1F22;
+    --line:rgba(237,234,226,0.1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--brass);color:var(--ink);}
+  a{color:inherit;text-decoration:none;}
+
+  .display{font-family:'Fraunces',serif;}
+  .mono{font-family:'JetBrains Mono',monospace;letter-spacing:0.02em;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--brass-bright);
+  }
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 5vw;
+    mix-blend-mode:difference;
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-size:20px;
+    letter-spacing:0.14em;
+    font-weight:700;
+  }
+  .logo em{font-style:italic;color:var(--brass-bright);}
+  .navlinks{display:flex; gap:40px; font-size:13px; letter-spacing:0.06em;}
+  .navlinks a{opacity:0.75; transition:opacity .25s;}
+  .navlinks a:hover{opacity:1;}
+  .navlinks{display:none;}
+  @media(min-width:860px){.navlinks{display:flex;}}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:120px 6vw 60px;
+    background:
+      radial-gradient(ellipse at 50% 15%, rgba(176,141,70,0.10), transparent 55%),
+      var(--ink);
+    border-bottom:1px solid var(--line);
+  }
+  .hero .eyebrow{margin-bottom:22px;}
+  .hero h1{
+    font-size:clamp(40px, 7vw, 92px);
+    line-height:1.02;
+    font-weight:700;
+    max-width:16ch;
+  }
+  .hero h1 i{font-style:italic; color:var(--brass-bright); font-weight:600;}
+  .hero p.sub{
+    margin-top:26px;
+    max-width:44ch;
+    color:var(--ivory-dim);
+    font-size:16px;
+    line-height:1.65;
+  }
+  .hero-bike{
+    width:min(720px, 88vw);
+    margin:50px auto 10px;
+  }
+  .hero-bike path, .hero-bike circle, .hero-bike line{
+    stroke-dasharray:2400;
+    stroke-dashoffset:2400;
+    animation:draw 3.2s cubic-bezier(.4,.1,.2,1) forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  .cta-row{display:flex; gap:16px; margin-top:36px; flex-wrap:wrap; justify-content:center;}
+  .btn{
+    padding:15px 34px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    border:1px solid var(--brass);
+    transition:all .3s ease;
+    cursor:pointer;
+    background:transparent;
+    color:var(--ivory);
+  }
+  .btn.solid{background:var(--brass); color:var(--ink); border-color:var(--brass);}
+  .btn.solid:hover{background:var(--brass-bright); border-color:var(--brass-bright);}
+  .btn:not(.solid):hover{background:rgba(176,141,70,0.12);}
+
+  /* ===== SECTION SHELL ===== */
+  section{padding:120px 6vw;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:64px; flex-wrap:wrap;
+    border-bottom:1px solid var(--line);
+    padding-bottom:28px;
+  }
+  .section-head h2{
+    font-family:'Fraunces',serif; font-weight:700;
+    font-size:clamp(30px,4vw,48px);
+  }
+  .section-head p{max-width:38ch; color:var(--ivory-dim); font-size:14px; line-height:1.6;}
+
+  /* ===== COLLECTION ===== */
+  .collection{background:var(--panel);}
+  .grid-models{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1px; background:var(--line);
+    border:1px solid var(--line);
+  }
+  .model-card{
+    background:var(--panel);
+    padding:40px 32px;
+    transition:background .35s ease;
+    position:relative;
+  }
+  .model-card:hover{background:var(--panel-2);}
+  .model-num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass); margin-bottom:28px; display:block;}
+  .model-card h3{font-family:'Fraunces',serif; font-size:28px; font-weight:700; margin-bottom:6px;}
+  .model-card .tagline{color:var(--ivory-dim); font-size:13px; font-style:italic; margin-bottom:26px;}
+  .model-photo{
+    width:100%; aspect-ratio:4/3; margin-bottom:26px;
+    background:radial-gradient(ellipse at 30% 20%, rgba(176,141,70,0.16), transparent 60%), var(--panel-2);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .model-photo svg{width:82%; height:82%;}
+  .specs{list-style:none; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ivory-dim);}
+  .specs li{display:flex; justify-content:space-between; padding:9px 0; border-top:1px solid var(--line);}
+  .specs li span:last-child{color:var(--ivory);}
+  .price{margin-top:26px; font-family:'Fraunces',serif; font-size:22px; color:var(--brass-bright);}
+  .card-order-btn{
+    display:inline-block; margin-top:18px; width:100%; text-align:center;
+    padding:12px 0; font-family:'JetBrains Mono',monospace; font-size:11px;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ivory);
+    border:1px solid var(--brass); background:transparent; cursor:pointer;
+    transition:all .25s ease;
+  }
+  .card-order-btn:hover{background:var(--brass); color:var(--ink);}
+
+  /* ===== CRAFT ===== */
+  .craft{
+    display:grid; grid-template-columns:1fr; gap:70px;
+  }
+  @media(min-width:900px){.craft{grid-template-columns:1fr 1fr;}}
+  .craft-copy h2{
+    font-family:'Fraunces',serif; font-weight:700; font-size:clamp(30px,4vw,46px);
+    line-height:1.15; margin-bottom:24px;
+  }
+  .craft-copy p{color:var(--ivory-dim); font-size:15px; line-height:1.8; max-width:46ch;}
+  .materials{list-style:none; margin-top:40px;}
+  .materials li{
+    display:grid; grid-template-columns:110px 1fr; gap:24px;
+    padding:20px 0; border-top:1px solid var(--line);
+    align-items:baseline;
+  }
+  .materials li:last-child{border-bottom:1px solid var(--line);}
+  .materials .mat-name{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass-bright); text-transform:uppercase; letter-spacing:0.06em;}
+  .materials .mat-desc{color:var(--ivory-dim); font-size:14px; line-height:1.6;}
+
+  /* ===== ORDER / CTA ===== */
+  .order{
+    background:linear-gradient(180deg, var(--ink), var(--burgundy) 180%);
+    text-align:center;
+    border-top:1px solid var(--line);
+  }
+  .order .eyebrow{justify-content:center; display:flex;}
+  .order h2{
+    font-family:'Fraunces',serif; font-weight:700;
+    font-size:clamp(32px,5vw,60px); margin:20px auto 20px; max-width:18ch;
+  }
+  .order p{color:var(--ivory-dim); max-width:42ch; margin:0 auto 40px; font-size:15px;}
+
+  /* ===== ORDER FORM ===== */
+  .order-form{
+    max-width:560px; margin:0 auto; text-align:left;
+    display:grid; gap:18px;
+  }
+  .order-form .row2{display:grid; grid-template-columns:1fr; gap:18px;}
+  @media(min-width:600px){.order-form .row2{grid-template-columns:1fr 1fr;}}
+  .field label{
+    display:block; font-family:'JetBrains Mono',monospace; font-size:11px;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ivory-dim); margin-bottom:8px;
+  }
+  .field input, .field select, .field textarea{
+    width:100%; background:rgba(237,234,226,0.04);
+    border:1px solid var(--line); color:var(--ivory);
+    padding:13px 14px; font-family:'Inter',sans-serif; font-size:14px;
+    transition:border-color .25s, background .25s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none; border-color:var(--brass); background:rgba(176,141,70,0.06);
+  }
+  .field textarea{resize:vertical; min-height:90px;}
+  .field select{appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--brass) 50%), linear-gradient(135deg, var(--brass) 50%, transparent 50%); background-position:calc(100% - 20px) center, calc(100% - 15px) center; background-size:5px 5px, 5px 5px; background-repeat:no-repeat;}
+  .order-form .btn{width:100%; margin-top:6px;}
+  .form-note{font-size:12px; color:var(--ivory-dim); margin-top:16px; line-height:1.6;}
+  .form-success{
+    display:none; text-align:center; padding:40px 20px;
+    border:1px solid var(--brass); background:rgba(176,141,70,0.06);
+  }
+  .form-success h3{font-family:'Fraunces',serif; font-weight:700; font-size:24px; color:var(--brass-bright); margin-bottom:10px;}
+  .form-success p{color:var(--ivory-dim); font-size:14px;}
+
+  /* ===== SPOTLIGHT (bitta model uchun kengaytirilgan sahifa) ===== */
+  .spotlight{background:var(--panel); border-top:1px solid var(--line);}
+  .spotlight-grid{display:grid; grid-template-columns:1fr; gap:60px; align-items:center;}
+  @media(min-width:900px){.spotlight-grid{grid-template-columns:1.1fr 1fr;}}
+  .spotlight-photo{
+    aspect-ratio:1/1; background:radial-gradient(ellipse at 35% 25%, rgba(176,141,70,0.18), transparent 60%), var(--panel-2);
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+  }
+  .spotlight-photo svg{width:78%; height:78%;}
+  .spotlight-text .model-num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass);}
+  .spotlight-text h2{font-family:'Fraunces',serif; font-weight:700; font-size:clamp(30px,4vw,50px); margin:14px 0 20px;}
+  .spotlight-text p{color:var(--ivory-dim); font-size:15px; line-height:1.8; max-width:48ch; margin-bottom:30px;}
+  .spotlight-specs{display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:32px;}
+  .spotlight-specs div{padding:16px 0; border-top:1px solid var(--line);}
+  .spotlight-specs div:nth-last-child(-n+2){border-bottom:1px solid var(--line);}
+  .spotlight-specs .k{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ivory-dim); margin-bottom:6px;}
+  .spotlight-specs .v{font-size:15px; color:var(--ivory);}
+
+  /* ===== JAMOA / BREND ===== */
+  .team{background:var(--ink); border-top:1px solid var(--line);}
+  .team-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:90px;
+  }
+  .team-card{background:var(--panel); padding:36px 28px; text-align:center;}
+  .team-avatar{width:100%; max-width:150px; margin:0 auto 22px;}
+  .team-card h4{font-family:'Fraunces',serif; font-weight:700; font-size:19px; margin-bottom:6px;}
+  .team-card .role{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--brass-bright);}
+
+  .package-head h3{font-family:'Fraunces',serif; font-weight:700; font-size:clamp(24px,3vw,34px); margin-bottom:14px;}
+  .package-head p{color:var(--ivory-dim); font-size:14px; max-width:52ch; line-height:1.7; margin-bottom:46px;}
+  .package-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:36px;}
+  .package-item{text-align:center;}
+  .package-item svg{width:100%; max-width:220px; margin:0 auto 18px;}
+  .package-item .label{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ivory-dim);}
+
+  /* ===== FOOTER ===== */
+  footer{
+    padding:50px 6vw; display:flex; justify-content:space-between; align-items:center;
+    border-top:1px solid var(--line); flex-wrap:wrap; gap:20px;
+    font-size:12px; color:var(--ivory-dim);
+  }
+  footer .logo{font-size:15px;}
+  .foot-links{display:flex; gap:26px;}
+  .foot-links a:hover{color:var(--brass-bright);}
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-bike path, .hero-bike circle, .hero-bike line{animation:none; stroke-dashoffset:0;}
+    html{scroll-behavior:auto;}
+  }
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--brass-bright); outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AUR<em>u</em>M <span style="font-size:11px; opacity:.6; font-family:'JetBrains Mono',monospace; letter-spacing:.2em;">CYCLES</span></div>
+  <div class="navlinks">
+    <a href="#kolleksiya">Kolleksiya</a>
+    <a href="#ustachilik">Ustachilik</a>
+    <a href="#jamoa">Jamoamiz</a>
+    <a href="#buyurtma">Buyurtma</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="eyebrow">Est. amenal — qo'lda yig'iladi</span>
+  <h1>Har bir velosiped <i>san'at asari</i> darajasida yaratiladi</h1>
+  <p class="sub">Karbon tola, titan va qo'lda kavsharlangan po'lat ramalar — imzo qo'yilgan, raqamlangan va butun umr xizmat qilishga mo'ljallangan.</p>
+
+  <svg class="hero-bike" viewBox="0 0 600 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g stroke="#D4AF63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="140" cy="185" r="62"/>
+      <circle cx="460" cy="185" r="62"/>
+      <circle cx="140" cy="185" r="4" fill="#D4AF63"/>
+      <circle cx="460" cy="185" r="4" fill="#D4AF63"/>
+      <path d="M140 185 L300 185 L460 185"/>
+      <path d="M140 185 L245 70 L300 185"/>
+      <path d="M245 70 L330 70"/>
+      <path d="M300 185 L340 90 L460 185"/>
+      <path d="M340 90 L370 70 L400 70"/>
+      <path d="M330 70 L300 40"/>
+      <line x1="285" y1="40" x2="315" y2="40"/>
+      <path d="M340 90 L320 185"/>
+      <circle cx="245" cy="185" r="16"/>
+      <path d="M235 195 L200 220 M255 195 L280 220"/>
+    </g>
+  </svg>
+
+  <div class="cta-row">
+    <a href="#kolleksiya" class="btn solid">Kolleksiyani ko'rish</a>
+    <a href="#buyurtma" class="btn">Individual buyurtma</a>
+  </div>
+</section>
+
+<section class="collection" id="kolleksiya">
+  <div class="section-head">
+    <h2>Joriy kolleksiya</h2>
+    <p>Har mavsumda faqat cheklangan sonda ishlab chiqariladi. Har biri qo'lda tekshiriladi va sertifikatlanadi.</p>
+  </div>
+
+  <div class="grid-models">
+    <div class="model-card">
+      <div class="model-photo">
+        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="75" cy="115" r="38"/><circle cx="225" cy="115" r="38"/>
+            <path d="M75 115 L150 115 L225 115 M75 115 L125 45 L150 115 M170 60 L200 60 M125 45 L170 60 L150 115 L225 115"/>
+            <circle cx="125" cy="115" r="9"/>
+          </g>
+        </svg>
+      </div>
+      <span class="model-num">MODEL — I</span>
+      <h3>Corsa Nera</h3>
+      <div class="tagline">Yo'l tezligi uchun yaratilgan</div>
+      <ul class="specs">
+        <li><span>Rama</span><span>To'liq karbon T1100</span></li>
+        <li><span>Og'irligi</span><span>6.1 kg</span></li>
+        <li><span>Transmissiya</span><span>12 tezlik, elektron</span></li>
+        <li><span>Ranglar</span><span>Ohaklangan qora / brass</span></li>
+      </ul>
+      <div class="price">$8,900</div>
+      <button class="card-order-btn" onclick="selectModel('Corsa Nera — \$8,900')">Buyurtma qilish →</button>
+    </div>
+
+    <div class="model-card">
+      <div class="model-photo">
+        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="70" cy="112" r="42"/><circle cx="230" cy="112" r="42"/>
+            <path d="M70 112 L145 112 L230 112 M70 112 L118 40 L145 112 M118 40 L165 40 M165 40 L190 60 L230 112"/>
+            <path d="M118 40 L100 20"/><path d="M190 60 L215 45"/>
+          </g>
+        </svg>
+      </div>
+      <span class="model-num">MODEL — II</span>
+      <h3>Monte Titano</h3>
+      <div class="tagline">Tog' yo'llari uchun mustahkam</div>
+      <ul class="specs">
+        <li><span>Rama</span><span>Grade-9 titan</span></li>
+        <li><span>Og'irligi</span><span>9.4 kg</span></li>
+        <li><span>Amortizator</span><span>140mm, qo'lda sozlanadi</span></li>
+        <li><span>Ranglar</span><span>Xom titan / burgundy</span></li>
+      </ul>
+      <div class="price">$11,400</div>
+      <button class="card-order-btn" onclick="selectModel('Monte Titano — \$11,400')">Buyurtma qilish →</button>
+    </div>
+
+    <div class="model-card">
+      <div class="model-photo">
+        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="78" cy="110" r="40"/><circle cx="222" cy="110" r="40"/>
+            <path d="M78 110 L150 110 L222 110 M78 110 L130 50 L150 110 M108 50 L155 50 M130 50 L145 30 L165 30"/>
+            <path d="M108 50 Q90 70 78 110"/>
+            <circle cx="130" cy="110" r="8"/>
+          </g>
+        </svg>
+      </div>
+      <span class="model-num">MODEL — III</span>
+      <h3>Villa Randonneur</h3>
+      <div class="tagline">Uzoq safarlar uchun nafis yechim</div>
+      <ul class="specs">
+        <li><span>Rama</span><span>Qo'lda kavsharlangan po'lat</span></li>
+        <li><span>Og'irligi</span><span>10.2 kg</span></li>
+        <li><span>Aksessuar</span><span>Charm to'shama, mis detallar</span></li>
+        <li><span>Ranglar</span><span>Yong'oq jigar / oltin</span></li>
+      </ul>
+      <div class="price">$7,250</div>
+      <button class="card-order-btn" onclick="selectModel('Villa Randonneur — \$7,250')">Buyurtma qilish →</button>
+    </div>
+
+    <div class="model-card">
+      <div class="model-photo">
+        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="75" cy="112" r="39"/><circle cx="225" cy="112" r="39"/>
+            <path d="M75 112 L150 112 L225 112 M75 112 L128 48 L150 112 M100 48 L156 48 M128 48 L170 65 L225 112"/>
+            <path d="M170 65 L190 48"/>
+          </g>
+        </svg>
+      </div>
+      <span class="model-num">MODEL — IV</span>
+      <h3>Fulmine Aero</h3>
+      <div class="tagline">Shamolga qarshi — aerodinamik yo'l ramasi</div>
+      <ul class="specs">
+        <li><span>Rama</span><span>Aero-profil karbon</span></li>
+        <li><span>Og'irligi</span><span>6.8 kg</span></li>
+        <li><span>Transmissiya</span><span>12 tezlik, elektron</span></li>
+        <li><span>Ranglar</span><span>Charog'i qora / brass</span></li>
+      </ul>
+      <div class="price">$9,600</div>
+      <button class="card-order-btn" onclick="selectModel('Fulmine Aero — \$9,600')">Buyurtma qilish →</button>
+    </div>
+
+    <div class="model-card">
+      <div class="model-photo">
+        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="72" cy="114" r="41"/><circle cx="228" cy="114" r="41"/>
+            <path d="M72 114 L148 114 L228 114 M72 114 L120 44 L148 114 M120 44 L165 44 M148 114 L188 90 L228 114"/>
+            <path d="M188 90 L210 70"/>
+          </g>
+        </svg>
+      </div>
+      <span class="model-num">MODEL — V</span>
+      <h3>Gravello Endurance</h3>
+      <div class="tagline">Uzoq masofa va notekis yo'llar uchun</div>
+      <ul class="specs">
+        <li><span>Rama</span><span>Karbon + titan qo'shilma</span></li>
+        <li><span>Og'irligi</span><span>8.3 kg</span></li>
+        <li><span>G'ildirak</span><span>650b, keng shina</span></li>
+        <li><span>Ranglar</span><span>Zaytun yashil / brass</span></li>
+      </ul>
+      <div class="price">$8,150</div>
+      <button class="card-order-btn" onclick="selectModel('Gravello Endurance — \$8,150')">Buyurtma qilish →</button>
+    </div>
+
+    <div class="model-card">
+      <div class="model-photo">
+        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="76" cy="113" r="40"/><circle cx="224" cy="113" r="40"/>
+            <path d="M76 113 L152 113 L224 113 M76 113 L122 46 L152 113 M100 46 L150 46"/>
+            <path d="M152 113 L180 95 L224 113"/>
+            <path d="M122 46 L108 25"/>
+          </g>
+        </svg>
+      </div>
+      <span class="model-num">MODEL — VI</span>
+      <h3>Cittá Classic</h3>
+      <div class="tagline">Shahar uchun kundalik nafislik</div>
+      <ul class="specs">
+        <li><span>Rama</span><span>Qo'lda kavsharlangan xrom-moli</span></li>
+        <li><span>Og'irligi</span><span>11.5 kg</span></li>
+        <li><span>Aksessuar</span><span>Charm sumka, mis qo'ng'iroq</span></li>
+        <li><span>Ranglar</span><span>Krem oq / brass</span></li>
+      </ul>
+      <div class="price">$5,400</div>
+      <button class="card-order-btn" onclick="selectModel('Cittá Classic — \$5,400')">Buyurtma qilish →</button>
+    </div>
+  </div>
+</section>
+
+<section class="spotlight">
+  <div class="section-head">
+    <h2>Modelga yaqindan nazar</h2>
+    <p>Flagman modelimiz — Corsa Nera — har bir detali bilan tanishing.</p>
+  </div>
+  <div class="spotlight-grid">
+    <div class="spotlight-photo">
+      <svg viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#D4AF63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="100" cy="155" r="52"/><circle cx="300" cy="155" r="52"/>
+          <path d="M100 155 L200 155 L300 155 M100 155 L165 60 L200 155 M225 80 L265 80 M165 60 L225 80 L200 155 L300 155"/>
+          <circle cx="165" cy="155" r="12"/>
+          <path d="M155 165 L130 190 M175 165 L200 190"/>
+        </g>
+      </svg>
+    </div>
+    <div class="spotlight-text">
+      <span class="model-num">MODEL — I / FLAGMAN</span>
+      <h2>Corsa Nera</h2>
+      <p>Yo'l poygalari uchun loyihalashtirilgan Corsa Nera — Yaponiyalik T1100 karbon tolasidan qo'lda qatlamlanadi. Har bir rama 40 soatlik qo'l mehnati bilan yig'iladi va raqamlangan sertifikat bilan yetkaziladi.</p>
+      <div class="spotlight-specs">
+        <div><div class="k">Rama materiali</div><div class="v">To'liq karbon T1100</div></div>
+        <div><div class="k">Og'irligi</div><div class="v">6.1 kg</div></div>
+        <div><div class="k">Transmissiya</div><div class="v">12 tezlik, elektron</div></div>
+        <div><div class="k">G'ildiraklar</div><div class="v">Karbon obod, 28mm</div></div>
+        <div><div class="k">Yig'ilish vaqti</div><div class="v">40 soat, qo'lda</div></div>
+        <div><div class="k">Kafolat</div><div class="v">Umrbod, rama uchun</div></div>
+      </div>
+      <div class="cta-row" style="justify-content:flex-start;">
+        <a href="#buyurtma" class="btn solid" onclick="selectModel('Corsa Nera — \$8,900')">Ushbu modelni buyurtma qilish</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="craft" id="ustachilik">
+  <div class="craft-copy">
+    <span class="eyebrow">Ustachilik</span>
+    <h2>Zavodda emas, ustaxonada tug'iladi</h2>
+    <p>Har bir AURUM ramasi bitta usta tomonidan boshidan oxirigacha yig'iladi. Konveyer yo'q, seriya yo'q — faqat sizning o'lchamlaringiz, sizning uslubingiz va sizning imzoyingiz uchun ishlangan yagona nusxa.</p>
+    <p style="margin-top:18px;">Buyurtma qabul qilingandan so'ng, usta siz bilan bevosita bog'lanadi va rama geometriyasini tanangiz o'lchamlariga moslab loyihalashtiradi.</p>
+
+    <ul class="materials">
+      <li><span class="mat-name">Karbon</span><span class="mat-desc">Yaponiyadan yetkazib beriladigan T1100 tolasi, qo'lda qatlamlanadi.</span></li>
+      <li><span class="mat-name">Titan</span><span class="mat-desc">Aerokosmik standartdagi Grade-9 qotishma, zanglamaydi.</span></li>
+      <li><span class="mat-name">Charm</span><span class="mat-desc">Italiyalik veg-tan charmi, qo'lda tikilgan egar va tutqichlar.</span></li>
+      <li><span class="mat-name">Brass</span><span class="mat-desc">Barcha metall detallar — qadimiy uslubdagi mis-brass qotishmasi.</span></li>
+    </ul>
+  </div>
+
+  <div style="display:flex; align-items:center; justify-content:center;">
+    <svg width="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="max-width:420px;">
+      <circle cx="200" cy="200" r="170" stroke="rgba(237,234,226,0.1)" stroke-width="1"/>
+      <circle cx="200" cy="200" r="120" stroke="rgba(237,234,226,0.08)" stroke-width="1"/>
+      <g stroke="#B08D46" stroke-width="1.4" stroke-linecap="round">
+        <line x1="200" y1="30" x2="200" y2="70"/>
+        <line x1="200" y1="330" x2="200" y2="370"/>
+        <line x1="30" y1="200" x2="70" y2="200"/>
+        <line x1="330" y1="200" x2="370" y2="200"/>
+      </g>
+      <text x="200" y="205" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#A9A59C" letter-spacing="2">RAMA GEOMETRIYASI</text>
+      <text x="200" y="225" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AF63" letter-spacing="2">QO'LDA LOYIHALASHTIRILADI</text>
+    </svg>
+  </div>
+</section>
+
+<section class="team" id="jamoa">
+  <div class="section-head">
+    <h2>Bizning jamoa</h2>
+    <p>Har bir AURUM velosipedi ortida shu odamlar turadi — brend formasi va brendlangan asboblar bilan.</p>
+  </div>
+
+  <div class="team-grid">
+    <div class="team-card">
+      <svg class="team-avatar" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="80" cy="52" r="30" fill="#2A2A2D" stroke="#B08D46" stroke-width="1.5"/>
+        <path d="M35 190 C35 140 55 118 80 118 C105 118 125 140 125 190 Z" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
+        <text x="80" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AF63" letter-spacing="1">AURUM</text>
+        <line x1="55" y1="118" x2="45" y2="140" stroke="#B08D46" stroke-width="1.2"/>
+        <line x1="105" y1="118" x2="115" y2="140" stroke="#B08D46" stroke-width="1.2"/>
+      </svg>
+      <h4>Farrux Karimov</h4>
+      <div class="role">Bosh usta — rama yig'uvchi</div>
+    </div>
+
+    <div class="team-card">
+      <svg class="team-avatar" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="80" cy="52" r="30" fill="#2A2A2D" stroke="#B08D46" stroke-width="1.5"/>
+        <path d="M35 190 C35 140 55 118 80 118 C105 118 125 140 125 190 Z" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
+        <text x="80" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AF63" letter-spacing="1">AURUM</text>
+        <line x1="55" y1="118" x2="45" y2="140" stroke="#B08D46" stroke-width="1.2"/>
+        <line x1="105" y1="118" x2="115" y2="140" stroke="#B08D46" stroke-width="1.2"/>
+      </svg>
+      <h4>Malika Yusupova</h4>
+      <div class="role">Titan mutaxassisi</div>
+    </div>
+
+    <div class="team-card">
+      <svg class="team-avatar" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="80" cy="52" r="30" fill="#2A2A2D" stroke="#B08D46" stroke-width="1.5"/>
+        <path d="M35 190 C35 140 55 118 80 118 C105 118 125 140 125 190 Z" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
+        <text x="80" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AF63" letter-spacing="1">AURUM</text>
+        <line x1="55" y1="118" x2="45" y2="140" stroke="#B08D46" stroke-width="1.2"/>
+        <line x1="105" y1="118" x2="115" y2="140" stroke="#B08D46" stroke-width="1.2"/>
+      </svg>
+      <h4>Jasur Rahimov</h4>
+      <div class="role">Charm ustasi</div>
+    </div>
+
+    <div class="team-card">
+      <svg class="team-avatar" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="80" cy="52" r="30" fill="#2A2A2D" stroke="#B08D46" stroke-width="1.5"/>
+        <path d="M35 190 C35 140 55 118 80 118 C105 118 125 140 125 190 Z" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
+        <text x="80" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AF63" letter-spacing="1">AURUM</text>
+        <line x1="55" y1="118" x2="45" y2="140" stroke="#B08D46" stroke-width="1.2"/>
+        <line x1="105" y1="118" x2="115" y2="140" stroke="#B08D46" stroke-width="1.2"/>
+      </svg>
+      <h4>Dilnoza Saidova</h4>
+      <div class="role">Mijozlar bilan ishlash</div>
+    </div>
+  </div>
+
+  <div class="package-head">
+    <h3>Brend har bir detalda</h3>
+    <p>Ishchilarimizning formasi, ustaxona asboblari, velosiped ramalaridagi shildiratgichlar va do'kon paketlari — barchasi AURUM CYCLES belgisi bilan.</p>
+  </div>
+
+  <div class="package-grid">
+    <div class="package-item">
+      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M45 70 L155 70 L165 210 L35 210 Z" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
+        <path d="M70 70 C70 45 130 45 130 70" fill="none" stroke="#B08D46" stroke-width="2"/>
+        <rect x="60" y="120" width="80" height="46" fill="none" stroke="#D4AF63" stroke-width="1"/>
+        <text x="100" y="140" text-anchor="middle" font-family="Fraunces, serif" font-size="13" font-weight="700" fill="#D4AF63">AURUM</text>
+        <text x="100" y="155" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="2" fill="#EDEAE2">CYCLES</text>
+      </svg>
+      <div class="label">Do'kon paketi</div>
+    </div>
+
+    <div class="package-item">
+      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="30" y="60" width="140" height="110" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
+        <line x1="30" y1="60" x2="100" y2="20" stroke="#B08D46" stroke-width="1.5"/>
+        <line x1="170" y1="60" x2="100" y2="20" stroke="#B08D46" stroke-width="1.5"/>
+        <line x1="30" y1="170" x2="100" y2="130" stroke="#B08D46" stroke-width="1"/>
+        <line x1="170" y1="170" x2="100" y2="130" stroke="#B08D46" stroke-width="1"/>
+        <text x="100" y="100" text-anchor="middle" font-family="Fraunces, serif" font-size="15" font-weight="700" fill="#D4AF63">A</text>
+        <text x="100" y="118" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" letter-spacing="1.5" fill="#A9A59C">AURUM CYCLES</text>
+      </svg>
+      <div class="label">Mahsulot qutisi</div>
+    </div>
+
+    <div class="package-item">
+      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="55" y="30" width="90" height="150" rx="6" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
+        <circle cx="100" cy="60" r="18" fill="none" stroke="#D4AF63" stroke-width="1.4"/>
+        <text x="100" y="65" text-anchor="middle" font-family="Fraunces, serif" font-size="14" font-weight="700" fill="#D4AF63">A</text>
+        <text x="100" y="105" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="1.5" fill="#EDEAE2">USTA FORMASI</text>
+        <line x1="70" y1="120" x2="130" y2="120" stroke="#B08D46" stroke-width="0.7"/>
+        <line x1="70" y1="135" x2="130" y2="135" stroke="#B08D46" stroke-width="0.7"/>
+      </svg>
+      <div class="label">Ishchi formasi</div>
+    </div>
+
+    <div class="package-item">
+      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M40 130 Q100 40 160 130" fill="none" stroke="#B08D46" stroke-width="1.4"/>
+        <circle cx="55" cy="150" r="34" fill="none" stroke="#D4AF63" stroke-width="1.6"/>
+        <circle cx="145" cy="150" r="34" fill="none" stroke="#D4AF63" stroke-width="1.6"/>
+        <rect x="82" y="95" width="36" height="18" rx="2" fill="#1B1B1E" stroke="#B08D46" stroke-width="1"/>
+        <text x="100" y="108" text-anchor="middle" font-family="Fraunces, serif" font-size="9" font-weight="700" fill="#D4AF63">A</text>
+      </svg>
+      <div class="label">Rama shildiratgichi</div>
+    </div>
+  </div>
+</section>
+
+<section class="order" id="buyurtma">
+  <span class="eyebrow">Individual buyurtma</span>
+  <h2>O'zingizga mos yagona velosipedni yarating</h2>
+  <p>Konsultatsiya bepul. Usta siz bilan bog'lanib, o'lchamlar, materiallar va ranglar bo'yicha suhbatlashadi. Ishlab chiqarish muddati — 8 hafta.</p>
+
+  <form class="order-form" id="orderForm">
+    <div class="row2">
+      <div class="field">
+        <label for="f-name">Ism familiya</label>
+        <input id="f-name" name="name" type="text" required placeholder="Aliyev Vali">
+      </div>
+      <div class="field">
+        <label for="f-phone">Telefon / Telegram</label>
+        <input id="f-phone" name="phone" type="text" required placeholder="+998 90 123 45 67">
+      </div>
+    </div>
+    <div class="field">
+      <label for="f-model">Qiziqqan model</label>
+      <select id="f-model" name="model">
+        <option>Corsa Nera — $8,900</option>
+        <option>Monte Titano — $11,400</option>
+        <option>Villa Randonneur — $7,250</option>
+        <option>Fulmine Aero — $9,600</option>
+        <option>Gravello Endurance — $8,150</option>
+        <option>Cittá Classic — $5,400</option>
+        <option>Individual loyiha (o'zim tavsiflayman)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-msg">Xabar (o'lcham, rang, muddat va h.k.)</label>
+      <textarea id="f-msg" name="message" placeholder="Bo'yim 182 sm, ramani qora-brass rangda xohlayman..."></textarea>
+    </div>
+    <button type="submit" class="btn solid">So'rovni yuborish</button>
+    <p class="form-note">So'rov yuborilgach, 24 soat ichida ustamiz siz bilan bog'lanadi. Bu forma hozircha namoyish rejimida — real so'rovlarni qabul qilish uchun Telegram bot yoki backend ulanishi kerak.</p>
+  </form>
+
+  <div class="form-success" id="formSuccess">
+    <h3>Rahmat!</h3>
+    <p>So'rovingiz qabul qilindi. Tez orada usta siz bilan bog'lanadi.</p>
+  </div>
+</section>
+
+<script>
+  function selectModel(modelText){
+    const sel = document.getElementById('f-model');
+    for (const opt of sel.options){
+      if (opt.text === modelText){ sel.value = opt.value; break; }
+    }
+    document.getElementById('buyurtma').scrollIntoView({behavior:'smooth', block:'start'});
+    sel.style.borderColor = '#D4AF63';
+    sel.style.background = 'rgba(176,141,70,0.12)';
+    setTimeout(()=>{ sel.style.borderColor=''; sel.style.background=''; }, 1400);
+  }
+
+  const form = document.getElementById('orderForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.style.display = 'none';
+    success.style.display = 'block';
+  });
+</script>
+
+<footer>
+  <div class="logo">AUR<em>u</em>M CYCLES</div>
+  <div class="foot-links">
+    <a href="#kolleksiya">Kolleksiya</a>
+    <a href="#ustachilik">Ustachilik</a>
+    <a href="#buyurtma">Buyurtma</a>
+  </div>
+  <div>© 2026 AURUM Cycles. Barcha huquqlar himoyalangan.</div>
+</footer>
+
+</body>
+</html>
