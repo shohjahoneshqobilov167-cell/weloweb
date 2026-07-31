@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURUM CYCLES — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --ink:#0B0B0D; --panel:#141416; --panel-2:#1B1B1E;
+    --ivory:#EDEAE2; --ivory-dim:#A9A59C;
+    --brass:#B08D46; --brass-bright:#D4AF63;
+    --line:rgba(237,234,226,0.12);
+    --danger:#B34A3C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--ink); color:var(--ivory); font-family:'Inter',sans-serif; font-weight:300;}
+  h1,h2,h3{font-family:'Fraunces',serif; font-weight:700;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:var(--brass-bright);}
+
+  /* ---- LOGIN ---- */
+  #loginScreen{
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .login-box{
+    width:100%; max-width:360px; background:var(--panel); border:1px solid var(--line); padding:40px 32px;
+  }
+  .login-box h1{font-size:22px; margin-bottom:6px; letter-spacing:0.04em;}
+  .login-box p{color:var(--ivory-dim); font-size:13px; margin-bottom:28px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ivory-dim); margin-bottom:8px;}
+  .field input, .field select, .field textarea{
+    width:100%; background:rgba(237,234,226,0.04); border:1px solid var(--line); color:var(--ivory);
+    padding:12px 13px; font-family:'Inter',sans-serif; font-size:14px;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{outline:none; border-color:var(--brass);}
+  .btn{
+    display:inline-block; padding:12px 26px; font-family:'JetBrains Mono',monospace; font-size:12px;
+    letter-spacing:0.1em; text-transform:uppercase; border:1px solid var(--brass); background:var(--brass);
+    color:var(--ink); cursor:pointer; transition:.2s;
+  }
+  .btn:hover{background:var(--brass-bright); border-color:var(--brass-bright);}
+  .btn.ghost{background:transparent; color:var(--ivory);}
+  .btn.ghost:hover{background:rgba(176,141,70,0.12);}
+  .btn.danger{background:transparent; border-color:var(--danger); color:var(--danger);}
+  .btn.danger:hover{background:var(--danger); color:#fff;}
+  .btn.small{padding:8px 16px; font-size:10px;}
+  .error-msg{color:var(--danger); font-size:13px; margin-top:14px;}
+
+  /* ---- DASHBOARD ---- */
+  #dashboard{display:none;}
+  header{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:22px 5vw; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--ink); z-index:10;
+  }
+  header h1{font-size:18px; letter-spacing:0.08em;}
+  header h1 em{font-style:italic; color:var(--brass-bright);}
+  .tabs{display:flex; gap:10px;}
+  .tab-btn{
+    background:none; border:1px solid var(--line); color:var(--ivory-dim); padding:9px 18px;
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;
+  }
+  .tab-btn.active{border-color:var(--brass); color:var(--brass-bright);}
+  main{padding:40px 5vw 100px;}
+  .panel-section{display:none;}
+  .panel-section.active{display:block;}
+  .section-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; flex-wrap:wrap; gap:12px;}
+
+  /* product table */
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{text-align:left; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ivory-dim); padding:10px 12px; border-bottom:1px solid var(--line);}
+  td{padding:12px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  tr:hover td{background:var(--panel);}
+  .thumb{width:56px; height:42px; object-fit:cover; border:1px solid var(--line); background:var(--panel-2);}
+  .row-actions{display:flex; gap:8px;}
+  .status-badge{
+    font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.05em; text-transform:uppercase;
+    padding:4px 10px; border:1px solid var(--brass); color:var(--brass-bright); display:inline-block;
+  }
+  .status-badge.done{border-color:#5C8A5C; color:#8FCB8F;}
+  .status-badge.called{border-color:var(--brass); color:var(--brass-bright);}
+  select.status-select{background:var(--panel-2); border:1px solid var(--line); color:var(--ivory); font-family:'JetBrains Mono',monospace; font-size:11px; padding:6px 8px;}
+  .phone-link{color:var(--brass-bright); font-family:'JetBrains Mono',monospace;}
+
+  /* modal */
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:100;
+    align-items:flex-start; justify-content:center; padding:60px 20px; overflow-y:auto;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--panel); border:1px solid var(--line); width:100%; max-width:500px; padding:32px;}
+  .modal h3{margin-bottom:22px;}
+  .modal .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:20px;}
+
+  .empty-state{color:var(--ivory-dim); font-size:13px; padding:30px 0;}
+  .loading{color:var(--ivory-dim); font-size:13px;}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>AUR<em style="font-style:italic;color:#D4AF63">u</em>M — Admin</h1>
+    <p>Boshqaruv paneliga kirish uchun login qiling</p>
+    <form id="loginForm">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" required placeholder="admin@aurum.uz">
+      </div>
+      <div class="field">
+        <label>Parol</label>
+        <input type="password" id="loginPassword" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn" style="width:100%;">Kirish</button>
+      <p class="error-msg" id="loginError"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="dashboard">
+  <header>
+    <h1>AUR<em>u</em>M — Admin panel</h1>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="orders">Buyurtmalar</button>
+      <button class="tab-btn" data-tab="products">Mahsulotlar</button>
+      <button class="tab-btn ghost" id="logoutBtn" style="border-color:var(--line);">Chiqish</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ORDERS -->
+    <section class="panel-section active" id="tab-orders">
+      <div class="section-top">
+        <h2>Buyurtmalar</h2>
+        <button class="btn ghost" id="refreshOrders">Yangilash</button>
+      </div>
+      <div id="ordersTableWrap"><p class="loading">Yuklanmoqda...</p></div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="panel-section" id="tab-products">
+      <div class="section-top">
+        <h2>Mahsulotlar</h2>
+        <button class="btn" id="addProductBtn">+ Yangi mahsulot</button>
+      </div>
+      <div id="productsTableWrap"><p class="loading">Yuklanmoqda...</p></div>
+    </section>
+  </main>
+</div>
+
+<!-- ===== PRODUCT MODAL ===== -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <h3 id="modalTitle">Yangi mahsulot</h3>
+    <form id="productForm">
+      <input type="hidden" id="p-id">
+      <div class="field"><label>Nomi</label><input id="p-name" required></div>
+      <div class="field"><label>Tagline</label><input id="p-tagline"></div>
+      <div class="row2">
+        <div class="field"><label>Rama</label><input id="p-frame"></div>
+        <div class="field"><label>Og'irligi</label><input id="p-weight"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Transmissiya / detal</label><input id="p-transmission"></div>
+        <div class="field"><label>Rang</label><input id="p-colorway"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Narx</label><input id="p-price" placeholder="$8,900"></div>
+        <div class="field"><label>Tartib raqami</label><input id="p-sort" type="number" value="0"></div>
+      </div>
+      <div class="field"><label>Rasm fayli (images/ papkasidagi nom)</label><input id="p-image" placeholder="images/model-yangi.jpg"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn ghost" id="cancelModal">Bekor qilish</button>
+        <button type="submit" class="btn">Saqlash</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ====== SOZLAMALAR — o'zingizning Supabase ma'lumotlaringizni kiriting ======
+  const SUPABASE_URL = 'SIZNING_SUPABASE_URL';
+  const SUPABASE_ANON_KEY = 'SIZNING_SUPABASE_ANON_KEY';
+  // =============================================================================
+
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const loginScreen = document.getElementById('loginScreen');
+  const dashboard = document.getElementById('dashboard');
+
+  // ---- AUTH ----
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) {
+      document.getElementById('loginError').textContent = 'Xato: email yoki parol noto\'g\'ri';
+      return;
+    }
+    showDashboard();
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await sb.auth.signOut();
+    location.reload();
+  });
+
+  async function checkSession(){
+    const { data } = await sb.auth.getSession();
+    if (data.session) showDashboard(); else showLogin();
+  }
+
+  function showLogin(){ loginScreen.style.display='flex'; dashboard.style.display='none'; }
+  function showDashboard(){
+    loginScreen.style.display='none'; dashboard.style.display='block';
+    loadOrders(); loadProducts();
+  }
+
+  // ---- TABS ----
+  document.querySelectorAll('.tab-btn[data-tab]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-btn[data-tab]').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.panel-section').forEach(s=>s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ---- ORDERS ----
+  async function loadOrders(){
+    const wrap = document.getElementById('ordersTableWrap');
+    wrap.innerHTML = '<p class="loading">Yuklanmoqda...</p>';
+    const { data, error } = await sb.from('orders').select('*').order('created_at', { ascending:false });
+    if (error){ wrap.innerHTML = '<p class="error-msg">Xato: '+error.message+'</p>'; return; }
+    if (!data.length){ wrap.innerHTML = '<p class="empty-state">Hozircha buyurtmalar yo\'q.</p>'; return; }
+
+    let html = '<table><thead><tr><th>Sana</th><th>Ism</th><th>Telefon</th><th>Model</th><th>Xabar</th><th>Holat</th></tr></thead><tbody>';
+    for (const o of data){
+      const date = new Date(o.created_at).toLocaleString('uz-UZ');
+      html += `<tr>
+        <td class="mono" style="font-size:11px;color:var(--ivory-dim)">${date}</td>
+        <td>${escapeHtml(o.name)}</td>
+        <td><a class="phone-link" href="tel:${escapeHtml(o.phone)}">${escapeHtml(o.phone)}</a></td>
+        <td>${escapeHtml(o.model||'-')}</td>
+        <td style="max-width:220px;">${escapeHtml(o.message||'-')}</td>
+        <td>
+          <select class="status-select" data-id="${o.id}">
+            <option value="yangi" ${o.status==='yangi'?'selected':''}>Yangi</option>
+            <option value="qongiroq_qilindi" ${o.status==='qongiroq_qilindi'?'selected':''}>Qo'ng'iroq qilindi</option>
+            <option value="yakunlandi" ${o.status==='yakunlandi'?'selected':''}>Yakunlandi</option>
+          </select>
+        </td>
+      </tr>`;
+    }
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+
+    wrap.querySelectorAll('.status-select').forEach(sel=>{
+      sel.addEventListener('change', async ()=>{
+        await sb.from('orders').update({ status: sel.value }).eq('id', sel.dataset.id);
+      });
+    });
+  }
+  document.getElementById('refreshOrders').addEventListener('click', loadOrders);
+
+  // ---- PRODUCTS ----
+  async function loadProducts(){
+    const wrap = document.getElementById('productsTableWrap');
+    wrap.innerHTML = '<p class="loading">Yuklanmoqda...</p>';
+    const { data, error } = await sb.from('products').select('*').order('sort_order', { ascending:true });
+    if (error){ wrap.innerHTML = '<p class="error-msg">Xato: '+error.message+'</p>'; return; }
+    if (!data.length){ wrap.innerHTML = '<p class="empty-state">Hozircha mahsulot yo\'q. "+ Yangi mahsulot" tugmasini bosing.</p>'; return; }
+
+    let html = '<table><thead><tr><th>Rasm</th><th>Nomi</th><th>Narx</th><th>Tartib</th><th></th></tr></thead><tbody>';
+    for (const p of data){
+      html += `<tr>
+        <td><img class="thumb" src="${escapeHtml(p.image_url||'')}" onerror="this.style.opacity=0.2"></td>
+        <td>${escapeHtml(p.name)}</td>
+        <td class="mono">${escapeHtml(p.price||'-')}</td>
+        <td class="mono">${p.sort_order}</td>
+        <td class="row-actions">
+          <button class="btn ghost small" data-edit="${p.id}">Tahrirlash</button>
+          <button class="btn danger small" data-del="${p.id}">O'chirish</button>
+        </td>
+      </tr>`;
+    }
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+
+    wrap.querySelectorAll('[data-edit]').forEach(btn=>{
+      btn.addEventListener('click', ()=> openProductModal(data.find(p=>p.id===btn.dataset.edit)));
+    });
+    wrap.querySelectorAll('[data-del]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        if (!confirm('Ushbu mahsulotni o\'chirishga aminmisiz?')) return;
+        await sb.from('products').delete().eq('id', btn.dataset.del);
+        loadProducts();
+      });
+    });
+  }
+
+  const productModal = document.getElementById('productModal');
+  document.getElementById('addProductBtn').addEventListener('click', ()=> openProductModal(null));
+  document.getElementById('cancelModal').addEventListener('click', ()=> productModal.classList.remove('open'));
+
+  function openProductModal(p){
+    document.getElementById('modalTitle').textContent = p ? 'Mahsulotni tahrirlash' : 'Yangi mahsulot';
+    document.getElementById('p-id').value = p ? p.id : '';
+    document.getElementById('p-name').value = p ? p.name : '';
+    document.getElementById('p-tagline').value = p ? (p.tagline||'') : '';
+    document.getElementById('p-frame').value = p ? (p.frame||'') : '';
+    document.getElementById('p-weight').value = p ? (p.weight||'') : '';
+    document.getElementById('p-transmission').value = p ? (p.transmission||'') : '';
+    document.getElementById('p-colorway').value = p ? (p.colorway||'') : '';
+    document.getElementById('p-price').value = p ? (p.price||'') : '';
+    document.getElementById('p-sort').value = p ? p.sort_order : 0;
+    document.getElementById('p-image').value = p ? (p.image_url||'') : '';
+    productModal.classList.add('open');
+  }
+
+  document.getElementById('productForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const id = document.getElementById('p-id').value;
+    const payload = {
+      name: document.getElementById('p-name').value,
+      tagline: document.getElementById('p-tagline').value,
+      frame: document.getElementById('p-frame').value,
+      weight: document.getElementById('p-weight').value,
+      transmission: document.getElementById('p-transmission').value,
+      colorway: document.getElementById('p-colorway').value,
+      price: document.getElementById('p-price').value,
+      sort_order: parseInt(document.getElementById('p-sort').value)||0,
+      image_url: document.getElementById('p-image').value,
+    };
+    if (id){
+      await sb.from('products').update(payload).eq('id', id);
+    } else {
+      await sb.from('products').insert([payload]);
+    }
+    productModal.classList.remove('open');
+    loadProducts();
+  });
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str==null ? '' : String(str);
+    return d.innerHTML;
+  }
+
+  checkSession();
+</script>
+
+</body>
+</html>

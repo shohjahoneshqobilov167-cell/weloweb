@@ -155,6 +155,7 @@
     overflow:hidden;
   }
   .model-photo svg{width:82%; height:82%;}
+  .model-photo img{width:100%; height:100%; object-fit:cover; display:block;}
   .specs{list-style:none; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ivory-dim);}
   .specs li{display:flex; justify-content:space-between; padding:9px 0; border-top:1px solid var(--line);}
   .specs li span:last-child{color:var(--ivory);}
@@ -239,8 +240,10 @@
   .spotlight-photo{
     aspect-ratio:1/1; background:radial-gradient(ellipse at 35% 25%, rgba(176,141,70,0.18), transparent 60%), var(--panel-2);
     border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
   }
   .spotlight-photo svg{width:78%; height:78%;}
+  .spotlight-photo img{width:100%; height:100%; object-fit:cover; display:block;}
   .spotlight-text .model-num{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass);}
   .spotlight-text h2{font-family:'Fraunces',serif; font-weight:700; font-size:clamp(30px,4vw,50px); margin:14px 0 20px;}
   .spotlight-text p{color:var(--ivory-dim); font-size:15px; line-height:1.8; max-width:48ch; margin-bottom:30px;}
@@ -257,7 +260,8 @@
     gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:90px;
   }
   .team-card{background:var(--panel); padding:36px 28px; text-align:center;}
-  .team-avatar{width:100%; max-width:150px; margin:0 auto 22px;}
+  .team-avatar{width:100%; max-width:150px; margin:0 auto 22px; aspect-ratio:5/6; overflow:hidden; border:1px solid var(--line);}
+  .team-avatar img{width:100%; height:100%; object-fit:cover; display:block;}
   .team-card h4{font-family:'Fraunces',serif; font-weight:700; font-size:19px; margin-bottom:6px;}
   .team-card .role{font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--brass-bright);}
 
@@ -334,16 +338,10 @@
     <p>Har mavsumda faqat cheklangan sonda ishlab chiqariladi. Har biri qo'lda tekshiriladi va sertifikatlanadi.</p>
   </div>
 
-  <div class="grid-models">
+  <div class="grid-models" id="modelsGrid">
     <div class="model-card">
       <div class="model-photo">
-        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="75" cy="115" r="38"/><circle cx="225" cy="115" r="38"/>
-            <path d="M75 115 L150 115 L225 115 M75 115 L125 45 L150 115 M170 60 L200 60 M125 45 L170 60 L150 115 L225 115"/>
-            <circle cx="125" cy="115" r="9"/>
-          </g>
-        </svg>
+        <img src="images/model-corsa-nera.jpg" alt="Corsa Nera velosipedi" loading="lazy">
       </div>
       <span class="model-num">MODEL — I</span>
       <h3>Corsa Nera</h3>
@@ -360,13 +358,7 @@
 
     <div class="model-card">
       <div class="model-photo">
-        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="70" cy="112" r="42"/><circle cx="230" cy="112" r="42"/>
-            <path d="M70 112 L145 112 L230 112 M70 112 L118 40 L145 112 M118 40 L165 40 M165 40 L190 60 L230 112"/>
-            <path d="M118 40 L100 20"/><path d="M190 60 L215 45"/>
-          </g>
-        </svg>
+        <img src="images/model-monte-titano.jpg" alt="Monte Titano velosipedi" loading="lazy">
       </div>
       <span class="model-num">MODEL — II</span>
       <h3>Monte Titano</h3>
@@ -383,14 +375,7 @@
 
     <div class="model-card">
       <div class="model-photo">
-        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="78" cy="110" r="40"/><circle cx="222" cy="110" r="40"/>
-            <path d="M78 110 L150 110 L222 110 M78 110 L130 50 L150 110 M108 50 L155 50 M130 50 L145 30 L165 30"/>
-            <path d="M108 50 Q90 70 78 110"/>
-            <circle cx="130" cy="110" r="8"/>
-          </g>
-        </svg>
+        <img src="images/model-villa-randonneur.jpg" alt="Villa Randonneur velosipedi" loading="lazy">
       </div>
       <span class="model-num">MODEL — III</span>
       <h3>Villa Randonneur</h3>
@@ -407,13 +392,7 @@
 
     <div class="model-card">
       <div class="model-photo">
-        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="75" cy="112" r="39"/><circle cx="225" cy="112" r="39"/>
-            <path d="M75 112 L150 112 L225 112 M75 112 L128 48 L150 112 M100 48 L156 48 M128 48 L170 65 L225 112"/>
-            <path d="M170 65 L190 48"/>
-          </g>
-        </svg>
+        <img src="images/model-fulmine-aero.jpg" alt="Fulmine Aero velosipedi" loading="lazy">
       </div>
       <span class="model-num">MODEL — IV</span>
       <h3>Fulmine Aero</h3>
@@ -430,13 +409,7 @@
 
     <div class="model-card">
       <div class="model-photo">
-        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="72" cy="114" r="41"/><circle cx="228" cy="114" r="41"/>
-            <path d="M72 114 L148 114 L228 114 M72 114 L120 44 L148 114 M120 44 L165 44 M148 114 L188 90 L228 114"/>
-            <path d="M188 90 L210 70"/>
-          </g>
-        </svg>
+        <img src="images/model-gravello-endurance.jpg" alt="Gravello Endurance velosipedi" loading="lazy">
       </div>
       <span class="model-num">MODEL — V</span>
       <h3>Gravello Endurance</h3>
@@ -453,14 +426,7 @@
 
     <div class="model-card">
       <div class="model-photo">
-        <svg viewBox="0 0 300 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <g stroke="#D4AF63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="76" cy="113" r="40"/><circle cx="224" cy="113" r="40"/>
-            <path d="M76 113 L152 113 L224 113 M76 113 L122 46 L152 113 M100 46 L150 46"/>
-            <path d="M152 113 L180 95 L224 113"/>
-            <path d="M122 46 L108 25"/>
-          </g>
-        </svg>
+        <img src="images/model-citta-classic.jpg" alt="Cittá Classic velosipedi" loading="lazy">
       </div>
       <span class="model-num">MODEL — VI</span>
       <h3>Cittá Classic</h3>
@@ -484,14 +450,7 @@
   </div>
   <div class="spotlight-grid">
     <div class="spotlight-photo">
-      <svg viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <g stroke="#D4AF63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="100" cy="155" r="52"/><circle cx="300" cy="155" r="52"/>
-          <path d="M100 155 L200 155 L300 155 M100 155 L165 60 L200 155 M225 80 L265 80 M165 60 L225 80 L200 155 L300 155"/>
-          <circle cx="165" cy="155" r="12"/>
-          <path d="M155 165 L130 190 M175 165 L200 190"/>
-        </g>
-      </svg>
+      <img src="images/model-spotlight-corsa-nera.jpg" alt="Corsa Nera — batafsil" loading="lazy">
     </div>
     <div class="spotlight-text">
       <span class="model-num">MODEL — I / FLAGMAN</span>
@@ -551,49 +510,33 @@
 
   <div class="team-grid">
     <div class="team-card">
-      <svg class="team-avatar" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="80" cy="52" r="30" fill="#2A2A2D" stroke="#B08D46" stroke-width="1.5"/>
-        <path d="M35 190 C35 140 55 118 80 118 C105 118 125 140 125 190 Z" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
-        <text x="80" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AF63" letter-spacing="1">AURUM</text>
-        <line x1="55" y1="118" x2="45" y2="140" stroke="#B08D46" stroke-width="1.2"/>
-        <line x1="105" y1="118" x2="115" y2="140" stroke="#B08D46" stroke-width="1.2"/>
-      </svg>
+      <div class="team-avatar">
+        <img src="images/team-1.jpg" alt="Farrux Karimov" loading="lazy">
+      </div>
       <h4>Farrux Karimov</h4>
       <div class="role">Bosh usta — rama yig'uvchi</div>
     </div>
 
     <div class="team-card">
-      <svg class="team-avatar" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="80" cy="52" r="30" fill="#2A2A2D" stroke="#B08D46" stroke-width="1.5"/>
-        <path d="M35 190 C35 140 55 118 80 118 C105 118 125 140 125 190 Z" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
-        <text x="80" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AF63" letter-spacing="1">AURUM</text>
-        <line x1="55" y1="118" x2="45" y2="140" stroke="#B08D46" stroke-width="1.2"/>
-        <line x1="105" y1="118" x2="115" y2="140" stroke="#B08D46" stroke-width="1.2"/>
-      </svg>
+      <div class="team-avatar">
+        <img src="images/team-2.jpg" alt="Malika Yusupova" loading="lazy">
+      </div>
       <h4>Malika Yusupova</h4>
       <div class="role">Titan mutaxassisi</div>
     </div>
 
     <div class="team-card">
-      <svg class="team-avatar" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="80" cy="52" r="30" fill="#2A2A2D" stroke="#B08D46" stroke-width="1.5"/>
-        <path d="M35 190 C35 140 55 118 80 118 C105 118 125 140 125 190 Z" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
-        <text x="80" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AF63" letter-spacing="1">AURUM</text>
-        <line x1="55" y1="118" x2="45" y2="140" stroke="#B08D46" stroke-width="1.2"/>
-        <line x1="105" y1="118" x2="115" y2="140" stroke="#B08D46" stroke-width="1.2"/>
-      </svg>
+      <div class="team-avatar">
+        <img src="images/team-3.jpg" alt="Jasur Rahimov" loading="lazy">
+      </div>
       <h4>Jasur Rahimov</h4>
       <div class="role">Charm ustasi</div>
     </div>
 
     <div class="team-card">
-      <svg class="team-avatar" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="80" cy="52" r="30" fill="#2A2A2D" stroke="#B08D46" stroke-width="1.5"/>
-        <path d="M35 190 C35 140 55 118 80 118 C105 118 125 140 125 190 Z" fill="#1B1B1E" stroke="#B08D46" stroke-width="1.5"/>
-        <text x="80" y="152" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#D4AF63" letter-spacing="1">AURUM</text>
-        <line x1="55" y1="118" x2="45" y2="140" stroke="#B08D46" stroke-width="1.2"/>
-        <line x1="105" y1="118" x2="115" y2="140" stroke="#B08D46" stroke-width="1.2"/>
-      </svg>
+      <div class="team-avatar">
+        <img src="images/team-4.jpg" alt="Dilnoza Saidova" loading="lazy">
+      </div>
       <h4>Dilnoza Saidova</h4>
       <div class="role">Mijozlar bilan ishlash</div>
     </div>
@@ -659,6 +602,11 @@
   <h2>O'zingizga mos yagona velosipedni yarating</h2>
   <p>Konsultatsiya bepul. Usta siz bilan bog'lanib, o'lchamlar, materiallar va ranglar bo'yicha suhbatlashadi. Ishlab chiqarish muddati — 8 hafta.</p>
 
+  <div class="cta-row" style="justify-content:center; margin-bottom:44px;">
+    <a href="https://t.me/Shoxa_style_001" target="_blank" rel="noopener" class="btn solid">Telegram orqali yozish</a>
+    <a href="tel:+998901234567" class="btn">Qo'ng'iroq qilish: +998 90 123 45 67</a>
+  </div>
+
   <form class="order-form" id="orderForm">
     <div class="row2">
       <div class="field">
@@ -687,7 +635,7 @@
       <textarea id="f-msg" name="message" placeholder="Bo'yim 182 sm, ramani qora-brass rangda xohlayman..."></textarea>
     </div>
     <button type="submit" class="btn solid">So'rovni yuborish</button>
-    <p class="form-note">So'rov yuborilgach, 24 soat ichida ustamiz siz bilan bog'lanadi. Bu forma hozircha namoyish rejimida — real so'rovlarni qabul qilish uchun Telegram bot yoki backend ulanishi kerak.</p>
+    <p class="form-note">So'rov yuborilgach, 24 soat ichida ustamiz siz bilan bog'lanadi.</p>
   </form>
 
   <div class="form-success" id="formSuccess">
@@ -697,6 +645,11 @@
 </section>
 
 <script>
+  // ====== SOZLAMALAR — Supabase ma'lumotlaringizni shu yerga kiriting ======
+  const SUPABASE_URL = 'SIZNING_SUPABASE_URL';
+  const SUPABASE_ANON_KEY = 'SIZNING_SUPABASE_ANON_KEY';
+  // ==========================================================================
+
   function selectModel(modelText){
     const sel = document.getElementById('f-model');
     for (const opt of sel.options){
@@ -710,11 +663,99 @@
 
   const form = document.getElementById('orderForm');
   const success = document.getElementById('formSuccess');
-  form.addEventListener('submit', function(e){
+  const formError = document.createElement('p');
+  formError.className = 'error-msg';
+  formError.style.cssText = 'color:#D9776A;font-size:12px;margin-top:12px;display:none;';
+  form.appendChild(formError);
+
+  form.addEventListener('submit', async function(e){
     e.preventDefault();
-    form.style.display = 'none';
-    success.style.display = 'block';
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Yuborilmoqda...';
+    formError.style.display = 'none';
+
+    const payload = {
+      name: document.getElementById('f-name').value,
+      phone: document.getElementById('f-phone').value,
+      model: document.getElementById('f-model').value,
+      message: document.getElementById('f-msg').value,
+    };
+
+    try{
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('yuborishda xatolik');
+      form.style.display = 'none';
+      success.style.display = 'block';
+    } catch(err){
+      formError.textContent = 'Xatolik yuz berdi. Iltimos qayta urinib ko\'ring yoki to\'g\'ridan-to\'g\'ri Telegram orqali yozing.';
+      formError.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'So\'rovni yuborish';
+    }
   });
+
+  // ---- Mahsulotlarni Supabase'dan dinamik yuklash ----
+  // (Agar SUPABASE_URL sozlanmagan bo'lsa yoki xato bo'lsa, yuqoridagi
+  //  tayyor 6 ta model o'z holicha ko'rinaveradi — sayt hech qachon bo'sh qolmaydi.)
+  async function loadModels(){
+    if (SUPABASE_URL === 'SIZNING_SUPABASE_URL') return; // hali sozlanmagan
+    try{
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*&order=sort_order.asc`, {
+        headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
+      });
+      if (!res.ok) return;
+      const products = await res.json();
+      if (!Array.isArray(products) || !products.length) return;
+
+      const grid = document.getElementById('modelsGrid');
+      const modelSelect = document.getElementById('f-model');
+      grid.innerHTML = '';
+      const customOption = modelSelect.querySelector('option:last-child');
+      modelSelect.innerHTML = '';
+
+      products.forEach((p, i) => {
+        const optionText = `${p.name} — ${p.price || ''}`.trim();
+
+        grid.insertAdjacentHTML('beforeend', `
+          <div class="model-card">
+            <div class="model-photo"><img src="${p.image_url||''}" alt="${escapeHtml(p.name)}" loading="lazy"></div>
+            <span class="model-num">MODEL — ${String(i+1).padStart(2,'0')}</span>
+            <h3>${escapeHtml(p.name)}</h3>
+            <div class="tagline">${escapeHtml(p.tagline||'')}</div>
+            <ul class="specs">
+              <li><span>Rama</span><span>${escapeHtml(p.frame||'-')}</span></li>
+              <li><span>Og'irligi</span><span>${escapeHtml(p.weight||'-')}</span></li>
+              <li><span>Detal</span><span>${escapeHtml(p.transmission||'-')}</span></li>
+              <li><span>Ranglar</span><span>${escapeHtml(p.colorway||'-')}</span></li>
+            </ul>
+            <div class="price">${escapeHtml(p.price||'')}</div>
+            <button class="card-order-btn" onclick="selectModel('${optionText.replace(/'/g,"\\'")}')">Buyurtma qilish →</button>
+          </div>
+        `);
+
+        const opt = document.createElement('option');
+        opt.textContent = optionText;
+        modelSelect.appendChild(opt);
+      });
+
+      if (customOption) modelSelect.appendChild(customOption);
+    } catch(e){
+      console.warn('Mahsulotlarni yuklab bo\'lmadi, statik ro\'yxat ko\'rsatilmoqda.', e);
+    }
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str==null ? '' : String(str);
+    return d.innerHTML;
+  }
+
+  loadModels();
 </script>
 
 <footer>
@@ -723,6 +764,8 @@
     <a href="#kolleksiya">Kolleksiya</a>
     <a href="#ustachilik">Ustachilik</a>
     <a href="#buyurtma">Buyurtma</a>
+    <a href="https://t.me/Shoxa_style_001" target="_blank" rel="noopener">Telegram</a>
+    <a href="tel:+998901234567">+998 90 123 45 67</a>
   </div>
   <div>© 2026 AURUM Cycles. Barcha huquqlar himoyalangan.</div>
 </footer>
